@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.amirhusseinsoori.grpcmviarch.R
+import com.amirhusseinsoori.grpcmviarch.databinding.FragmentGrpcBinding
 import com.amirhusseinsoori.grpcmviarch.domain.exception.GrpcWrapper
 import com.arad.domain.entity.TurnOn
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,8 +24,10 @@ class GrpcFragment :Fragment(R.layout.fragment_grpc) {
     @Inject
     lateinit var androidId: String
 
+    lateinit var binding:FragmentGrpcBinding
 
-    
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onCollectTurnOnRequest()
@@ -33,8 +36,14 @@ class GrpcFragment :Fragment(R.layout.fragment_grpc) {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding=FragmentGrpcBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
-        onSubscribeTurnOnRequest()
+
+
+        binding.btnGrpcFRequest.setOnClickListener {
+            onSubscribeTurnOnRequest()
+        }
+
     }
 
     private fun onSubscribeTurnOnRequest(){
