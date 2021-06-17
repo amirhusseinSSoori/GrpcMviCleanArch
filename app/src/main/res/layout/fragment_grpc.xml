@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray">
 
 
     <com.amirhusseinsoori.grpcmviarch.presentation.util.RippleView
+        android:id="@+id/rippleView"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.82"
-        >
-
+        app:layout_constraintVertical_bias="0.82">
         <Button
             android:id="@+id/btn_GrpcF_Request"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/request"
-            android:textAllCaps="false"
             android:background="@drawable/bg_back_request"
             android:fontFamily="@font/vibur"
+            android:text="@string/request"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,9 +33,50 @@
     </com.amirhusseinsoori.grpcmviarch.presentation.util.RippleView>
 
 
+    <TextView
+        android:id="@+id/txt_GrpcF_statTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:text="@string/starttime"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/rippleView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/rippleView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_GrpcF_statTime_Result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/starttimeResult"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_GrpcF_statTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_GrpcF_statTime"
+        app:layout_constraintTop_toTopOf="@+id/txt_GrpcF_statTime" />
+
+    <TextView
+        android:id="@+id/txt_GrpcF_IntervalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="376dp"
+        android:text="@string/intervaltime"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/rippleView"
+        app:layout_constraintStart_toStartOf="@+id/txt_GrpcF_statTime"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 
-
-
-
+    <TextView
+        android:id="@+id/txt_GrpcF_IntervalTime_Result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/starttimeResult"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_GrpcF_IntervalTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_GrpcF_IntervalTime"
+        app:layout_constraintTop_toTopOf="@+id/txt_GrpcF_IntervalTime" />
 </androidx.constraintlayout.widget.ConstraintLayout>

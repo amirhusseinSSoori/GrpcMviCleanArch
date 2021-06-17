@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.amirhusseinsoori.grpcmviarch.R
 import com.amirhusseinsoori.grpcmviarch.databinding.FragmentGrpcBinding
 import com.amirhusseinsoori.grpcmviarch.domain.exception.GrpcWrapper
+import com.amirhusseinsoori.grpcmviarch.presentation.base.BaseFragment
 import com.arad.domain.entity.TurnOn
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -18,13 +19,12 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GrpcFragment :Fragment(R.layout.fragment_grpc) {
+class GrpcFragment :  BaseFragment<FragmentGrpcBinding>(FragmentGrpcBinding::inflate) {
 
     private val viewModel: GrpcViewModel by viewModels()
     @Inject
     lateinit var androidId: String
 
-    lateinit var binding:FragmentGrpcBinding
 
 
 
@@ -36,7 +36,6 @@ class GrpcFragment :Fragment(R.layout.fragment_grpc) {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding=FragmentGrpcBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
 
@@ -59,20 +58,20 @@ class GrpcFragment :Fragment(R.layout.fragment_grpc) {
 
                 when (even) {
                     is GrpcWrapper.Success -> {
-
-
-                        Log.e("TAG", "onCollectTurnOnRequest: ${even.data}", )
+                        binding.txtGrpcFStatTimeResult.text=even.data!!.startTime.toString()
+                        binding.txtGrpcFIntervalTimeResult.text=even.data!!.intervalCon.toString()
+                        toasty("Result : Success",1)
 
 
                     }
                     is GrpcWrapper.GrpcError -> {
 
-                        Log.e("TAG", "onCollectTurnOnRequest: ${even.error}", )
+                        toasty("Result : ${even.error}",3)
 
                     }
                     is GrpcWrapper.UnknownError -> {
+                        toasty("Result : ${even.error}",3)
 
-                        Log.e("TAG", "onCollectTurnOnRequest: ${even.error}", )
                     }
 
                     else -> Unit
