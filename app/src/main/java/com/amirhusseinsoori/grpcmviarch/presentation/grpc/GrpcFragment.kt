@@ -61,8 +61,6 @@ class GrpcFragment :  BaseFragment<FragmentGrpcBinding>(FragmentGrpcBinding::inf
                         binding.txtGrpcFStatTimeResult.text=even.data!!.startTime.toString()
                         binding.txtGrpcFIntervalTimeResult.text=even.data!!.intervalCon.toString()
                         toasty("Result : Success",1)
-
-
                     }
                     is GrpcWrapper.GrpcError -> {
 

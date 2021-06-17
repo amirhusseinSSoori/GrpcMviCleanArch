@@ -9,7 +9,7 @@ class TimeoutInterceptor @Inject constructor() : ClientInterceptor {
         method: MethodDescriptor<ReqT, RespT>, callOptions: CallOptions, next: Channel
     ): ClientCall<ReqT, RespT> {
         var callOptions = callOptions
-        callOptions = callOptions.withDeadlineAfter(5, TimeUnit.SECONDS)
+        callOptions = callOptions.withDeadlineAfter(1, TimeUnit.SECONDS)
         return next.newCall(method, callOptions)
     }
 }
