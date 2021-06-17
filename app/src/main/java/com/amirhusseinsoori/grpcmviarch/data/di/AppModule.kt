@@ -1,12 +1,19 @@
 package com.amirhusseinsoori.grpcmviarch.data.di
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.provider.Settings
 import android.provider.SyncStateContract
 import com.amirhusseinsoori.grpcmviarch.common.Constance.BASE_URL
 import com.amirhusseinsoori.grpcmviarch.common.Constance.PORT
 import com.amirhusseinsoori.grpcmviarch.data.network.TimeoutInterceptor
+import com.amirhusseinsoori.grpcmviarch.data.repository.GrpcRepositoryImp
+import com.amirhusseinsoori.grpcmviarch.data.source.NetworkSource
+import com.amirhusseinsoori.grpcmviarch.domain.repository.GrpcRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
@@ -38,5 +45,18 @@ object AppModule {
             .usePlaintext()
             .build()
     }
+
+    @SuppressLint("HardwareIds")
+    @Provides
+    fun provideAndroidId(@ApplicationContext context: Context): String {
+        return Settings.Secure.getString(
+            context.contentResolver,
+            Settings.Secure.ANDROID_ID
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideAlarmRepository(grpc: NetworkSource): GrpcRepository = GrpcRepositoryImp(grpc)
 
 }
