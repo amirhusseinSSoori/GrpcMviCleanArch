@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.amirhusseinsoori.grpcmviarch.domain.UseCase.TurnOnUseCase
 import com.arad.domain.entity.TurnOn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.grpc.StatusRuntimeException
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,32 +16,38 @@ import javax.inject.Inject
 class GrpcViewModel @Inject constructor(
     var turnOnUseCase: TurnOnUseCase,
 ) : ViewModel() {
+
     val userIntent = Channel<MainIntent>(Channel.UNLIMITED)
     private val _state = MutableStateFlow<MainState>(MainState.Idle)
     val state: StateFlow<MainState>
         get() = _state
 
+    init {
+        handleIntent()
+    }
 
 
 
-
-    fun handleIntent(turnOn: TurnOn) {
+     private fun handleIntent() {
         viewModelScope.launch {
             userIntent.consumeAsFlow().collect {
                 when (it) {
-                    is MainIntent.FetchUser -> fetchUser(turnOn)
+                    is MainIntent.FetchTurnOn -> fetchTurnOn(it.turnOn)
                 }
             }
         }
     }
 
-    private fun fetchUser(turnOn: TurnOn) {
+    private fun fetchTurnOn(turnOn: TurnOn) {
         viewModelScope.launch {
+            _state.value = MainState.Loading
             _state.value = try {
                 MainState.Success(turnOnUseCase.execute(turnOn))
-            } catch (e: StatusRuntimeException) {
+            } catch (e: Exception) {
                 MainState.Error(e.localizedMessage)
             }
         }
     }
+
+
 }
