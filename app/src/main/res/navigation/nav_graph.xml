@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/grpcFragment">
+    app:startDestination="@id/introFragment">
 
     <fragment
         android:id="@+id/grpcFragment"
+        tools:layout="@layout/fragment_grpc"
         android:name="com.amirhusseinsoori.grpcmviarch.presentation.grpc.GrpcFragment"
         android:label="GrpcFragment" />
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.amirhusseinsoori.grpcmviarch.presentation.intro.IntroFragment"
+        android:label="IntroFragment" >
+        <action
+            android:id="@+id/action_introFragment_to_grpcFragment"
+            app:destination="@id/grpcFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>

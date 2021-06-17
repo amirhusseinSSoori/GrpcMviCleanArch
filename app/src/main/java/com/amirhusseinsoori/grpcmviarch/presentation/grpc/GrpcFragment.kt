@@ -22,24 +22,28 @@ class GrpcFragment :Fragment(R.layout.fragment_grpc) {
     private val viewModel: GrpcViewModel by viewModels()
     @Inject
     lateinit var androidId: String
+
+
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onCollectTurnOnRequest()
     }
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        onSubscribeTurnOnRequest()
+    }
 
-
+    private fun onSubscribeTurnOnRequest(){
         viewModel.turnOnRequest( TurnOn(
             androidId,
             Date().time
         )
         )
     }
-
-
-
-
     private fun onCollectTurnOnRequest() {
         lifecycleScope.launchWhenStarted {
             viewModel.getTurnOnCollect.collect { even ->
