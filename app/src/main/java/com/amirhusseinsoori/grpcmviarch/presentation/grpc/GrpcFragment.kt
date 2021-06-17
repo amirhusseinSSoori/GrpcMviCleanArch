@@ -1,18 +1,13 @@
 package com.amirhusseinsoori.grpcmviarch.presentation.grpc
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.amirhusseinsoori.grpcmviarch.R
 import com.amirhusseinsoori.grpcmviarch.databinding.FragmentGrpcBinding
-import com.amirhusseinsoori.grpcmviarch.domain.exception.GrpcWrapper
 import com.amirhusseinsoori.grpcmviarch.presentation.base.BaseFragment
 import com.arad.domain.entity.TurnOn
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
@@ -46,37 +41,28 @@ class GrpcFragment :  BaseFragment<FragmentGrpcBinding>(FragmentGrpcBinding::inf
     }
 
     private fun onSubscribeTurnOnRequest(){
-        viewModel.turnOnRequest( TurnOn(
-            androidId,
-            Date().time
-        )
-        )
+        lifecycleScope.launch {
+            viewModel. handleIntent(TurnOn(androidId,Date().time))
+            viewModel.userIntent.send(MainIntent.FetchUser)
+        }
     }
-    private fun onCollectTurnOnRequest() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.getTurnOnCollect.collect { even ->
 
-                when (even) {
-                    is GrpcWrapper.Success -> {
-                        binding.txtGrpcFStatTimeResult.text=even.data!!.startTime.toString()
-                        binding.txtGrpcFIntervalTimeResult.text=even.data!!.intervalCon.toString()
+    private fun onCollectTurnOnRequest() {
+        lifecycleScope.launch {
+            viewModel.state.collect {
+                when (it) {
+                    is MainState.Success -> {
+                        binding.txtGrpcFStatTimeResult.text=it.user.startTime.toString()
+                        binding.txtGrpcFIntervalTimeResult.text=it.user.intervalCon.toString()
                         toasty("Result : Success",1)
                     }
-                    is GrpcWrapper.GrpcError -> {
-
-                        toasty("Result : ${even.error}",3)
-
-                    }
-                    is GrpcWrapper.UnknownError -> {
-                        toasty("Result : ${even.error}",3)
-
+                    is MainState.Error -> {
+                        toasty("Result : ${it.error}",3)
                     }
 
-                    else -> Unit
+                    else ->  Unit
                 }
             }
-
-
         }
     }
 }

@@ -10,17 +10,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.amirhusseinsoori.grpcmviarch.R
+import com.amirhusseinsoori.grpcmviarch.databinding.FragmentGrpcBinding
 import  com.amirhusseinsoori.grpcmviarch.presentation.util.startAnimation
 import com.amirhusseinsoori.grpcmviarch.databinding.FragmentIntroBinding
+import com.amirhusseinsoori.grpcmviarch.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
-class IntroFragment : Fragment(R.layout.fragment_intro) {
-    lateinit var binding: FragmentIntroBinding
+class IntroFragment : BaseFragment<FragmentIntroBinding>(FragmentIntroBinding::inflate) {
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentIntroBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
         val animation =
