@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.domain.mizannodes";
+option java_outer_classname = "MizanNodesprort";
+
+
+package mizannodes;
+
+service MizanNodes {
+  rpc SetTurnOn (TurnOnRequest) returns (SettingReply) {}
+
+}
+
+message TurnOnRequest {
+  string androidId = 1;
+  uint64 powerOnTime = 2;
+}
+
+message SettingReply {
+  uint32 intervalCon = 1;
+  uint32 startTime = 2;
+}
+
