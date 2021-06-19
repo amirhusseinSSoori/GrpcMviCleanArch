@@ -64,7 +64,7 @@ abstract class BaseFragment<VB : ViewBinding>(
         if (selectedMode != null) {
             Toast(requireActivity()).apply {
                 setGravity(Gravity.BOTTOM, 0, 100)
-                duration = Toast.LENGTH_LONG
+                duration = Toast.LENGTH_SHORT
                 view = layout
             }.show()
         }

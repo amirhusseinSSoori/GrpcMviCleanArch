@@ -1,6 +1,7 @@
 package com.amirhusseinsoori.grpcmviarch.presentation.grpc
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -8,8 +9,6 @@ import com.amirhusseinsoori.grpcmviarch.databinding.FragmentGrpcBinding
 import com.amirhusseinsoori.grpcmviarch.presentation.base.BaseFragment
 import com.arad.domain.entity.TurnOn
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
@@ -23,44 +22,50 @@ class GrpcFragment :  BaseFragment<FragmentGrpcBinding>(FragmentGrpcBinding::inf
     lateinit var androidId: String
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        onCollectTurnOnRequest()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.btnGrpcFRequest.setOnClickListener {
-            onCollectTurnOnRequest()
-            CoroutineScope(Dispatchers.IO).launch() {
-                viewModel.userIntent.send(MainIntent.FetchTurnOn(TurnOn(androidId, Date().time)))
-
-            }
-
+            viewModel.setEvent(GrpcContract.Event.OnShowResult(TurnOn(androidId,Date().time)))
+            viewModel.setEvent(GrpcContract.Event.HandelError)
         }
     }
 
 
     private fun onCollectTurnOnRequest() {
         lifecycleScope.launch {
-            viewModel.state.collect {
-                when (it) {
-
-                    is MainState.Success -> {
-                       binding.txtGrpcFIntervalTimeResult.text = it.settingReply.intervalCon.toString()
-                        binding.txtGrpcFStatTimeResult.text = it.settingReply.startTime.toString()
-                        toasty("Success",1)
+            viewModel.uiState.collect {
+                when (it.state) {
+                    is GrpcContract.SendRequestState.Idle -> {
+                        Log.e("TAG", "onCollectTurnOnRequest:  isIdle", )}
+                    is GrpcContract.SendRequestState.Success -> {
+                        binding.txtGrpcFStatTimeResult.text=it.state.settingReply.startTime.toString()
+                        binding.txtGrpcFIntervalTimeResult.text=it.state.settingReply.intervalCon.toString()
                     }
 
-                    is MainState.Error -> {
-                        toasty("Error",3)
-                    }
-
-                    else -> Unit
                 }
             }
 
+
+
+
+        }
+        lifecycleScope.launchWhenCreated {
+
+            viewModel.effect.collect {
+                when (it) {
+                    is GrpcContract.Effect.ShowMessage -> {
+                        toasty(it.message,3)
+                    }
+                }
+            }
+        }
         }
 
-    }
 
 
-
-
-    }
+}

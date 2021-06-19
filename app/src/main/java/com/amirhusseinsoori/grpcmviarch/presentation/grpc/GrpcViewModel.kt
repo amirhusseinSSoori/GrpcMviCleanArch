@@ -1,53 +1,53 @@
 package com.amirhusseinsoori.grpcmviarch.presentation.grpc
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amirhusseinsoori.grpcmviarch.domain.UseCase.TurnOnUseCase
 import com.arad.domain.entity.TurnOn
+import com.ysfcyln.mviplayground.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.consumeAsFlow
+import io.grpc.StatusRuntimeException
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
-class GrpcViewModel @Inject constructor(
-    var turnOnUseCase: TurnOnUseCase,
-) : ViewModel() {
+class GrpcViewModel @Inject constructor(var turnOnUseCase: TurnOnUseCase) :
+    BaseViewModel<GrpcContract.Event, GrpcContract.State, GrpcContract.Effect>() {
 
-    val userIntent = Channel<MainIntent>(Channel.UNLIMITED)
-    private val _state = MutableStateFlow<MainState>(MainState.Idle)
-    val state: StateFlow<MainState>
-        get() = _state
 
-    init {
-        handleIntent()
+    /**
+     * Create initial State of Views
+     */
+    override fun createInitialState(): GrpcContract.State {
+        return GrpcContract.State(
+            GrpcContract.SendRequestState.Idle
+        )
     }
 
-
-
-     private fun handleIntent() {
-        viewModelScope.launch {
-            userIntent.consumeAsFlow().collect {
-                when (it) {
-                    is MainIntent.FetchTurnOn -> fetchTurnOn(it.turnOn)
-                }
+    /**
+     * Handle each event
+     */
+    override fun handleEvent(event: GrpcContract.Event) {
+        when (event) {
+            is GrpcContract.Event.OnShowResult -> {
+                generateRandomNumber(event.turnOn)
             }
-        }
-    }
-
-    private fun fetchTurnOn(turnOn: TurnOn) {
-        viewModelScope.launch {
-            _state.value = MainState.Loading
-            _state.value = try {
-                MainState.Success(turnOnUseCase.execute(turnOn))
-            } catch (e: Exception) {
-                MainState.Error(e.localizedMessage)
-            }
+            else -> Unit
         }
     }
 
 
+  
+    private fun generateRandomNumber(turnOn: TurnOn?) {
+        viewModelScope.launch {
+            try {
+                val settingReply = turnOnUseCase.execute(turnOn)
+                setState { copy(state = GrpcContract.SendRequestState.Success(settingReply = settingReply)) }
+                setEffect { GrpcContract.Effect.ShowMessage("Success") }
+
+
+            } catch (exception: StatusRuntimeException) {
+                setEffect { GrpcContract.Effect.ShowMessage(exception.message!!) }
+            }
+        }
+    }
 }

@@ -1,13 +1,14 @@
 package com.amirhusseinsoori.grpcmviarch.data.source
 
 import com.arad.domain.entity.TurnOn
-import io.grpc.domain.request.RequestNodesGrpc
-import io.grpc.domain.request.SettingReply
-import io.grpc.domain.request.TurnOnRequest
+import io.grpc.domain.mizannodes.MizanNodesGrpc
+import io.grpc.domain.mizannodes.SettingReply
+import io.grpc.domain.mizannodes.TurnOnRequest
+
 
 import javax.inject.Inject
 class NetworkSource @Inject constructor(
-    val api: RequestNodesGrpc.RequestNodesBlockingStub
+    val api: MizanNodesGrpc.MizanNodesBlockingStub
 
 ) {
 
