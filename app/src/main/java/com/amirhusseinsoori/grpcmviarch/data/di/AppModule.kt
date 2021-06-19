@@ -17,8 +17,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
-import io.grpc.domain.mizannodes.MizanNodesGrpc
-import io.grpc.domain.mizannodes.TurnOnRequest
+import io.grpc.domain.request.RequestNodesGrpc
 
 import javax.inject.Singleton
 
@@ -31,8 +30,8 @@ object AppModule {
     fun setBlockingStub(
         timeout: TimeoutInterceptor,
         channel: ManagedChannel
-    ): MizanNodesGrpc.MizanNodesBlockingStub {
-        return MizanNodesGrpc.newBlockingStub(
+    ): RequestNodesGrpc.RequestNodesBlockingStub {
+        return RequestNodesGrpc.newBlockingStub(
             channel
         ).withInterceptors(timeout)
     }

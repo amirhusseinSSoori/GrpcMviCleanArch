@@ -4,7 +4,7 @@ import com.arad.domain.entity.TurnOn
 import com.amirhusseinsoori.grpcmviarch.presentation.base.UiEffect
 import com.amirhusseinsoori.grpcmviarch.presentation.base.UiEvent
 import com.amirhusseinsoori.grpcmviarch.presentation.base.UiState
-import io.grpc.domain.mizannodes.SettingReply
+import io.grpc.domain.request.SettingReply
 
 
 class GrpcContract {
@@ -20,7 +20,7 @@ class GrpcContract {
 
     sealed class SendRequestState {
         object Idle : SendRequestState()
-        data class Success(val settingReply: SettingReply ) : SendRequestState()
+        data class Success(val settingReply: SettingReply) : SendRequestState()
 
     }
 

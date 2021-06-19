@@ -29,15 +29,15 @@ class GrpcViewModel @Inject constructor(var turnOnUseCase: TurnOnUseCase) :
     override fun handleEvent(event: GrpcContract.Event) {
         when (event) {
             is GrpcContract.Event.OnShowResult -> {
-                generateRandomNumber(event.turnOn)
+                sendRequest(event.turnOn)
             }
             else -> Unit
         }
     }
 
 
-  
-    private fun generateRandomNumber(turnOn: TurnOn?) {
+
+    private fun sendRequest(turnOn: TurnOn?) {
         viewModelScope.launch {
             try {
                 val settingReply = turnOnUseCase.execute(turnOn)

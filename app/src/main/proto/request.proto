@@ -1,13 +1,13 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "io.grpc.domain.mizannodes";
-option java_outer_classname = "MizanNodesprort";
+option java_package = "io.grpc.domain.request";
+option java_outer_classname = "Requestprort";
 
 
-package mizannodes;
+package request;
 
-service MizanNodes {
+service RequestNodes {
   rpc SetTurnOn (TurnOnRequest) returns (SettingReply) {}
 
 }
