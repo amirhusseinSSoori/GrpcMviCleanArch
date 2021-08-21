@@ -1,8 +1,8 @@
 ![banner](https://miro.medium.com/max/784/1*yMpBGtp4ifmc3u7vnEi4wQ.png)
 # [GrpcMviCleanArch](https://github.com/amirhusseinSSoori/GrpcMviCleanArch)
 
-**NOTE** 
-this is amazing my sample for learning clean Architecture Mvi with Grpc
+**NOTE**
+this  repository is my sample for learning clean Architecture Mvi with Grpc
 
 
 1. Kotlin

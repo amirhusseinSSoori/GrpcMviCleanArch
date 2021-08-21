@@ -1,9 +1,9 @@
 object Versions {
 
-    val kotlin = "1.4.32"
+    val kotlin = "1.5.21"
 
     //----------------- hilt -----------------
-    val hilt_version = "2.33-beta"
+    val hilt_version = "2.38.1"
     val hilt_lifecycle_version = "1.0.0-alpha03"
 
     //----------------- test -----------------
@@ -26,8 +26,8 @@ object Versions {
 
     //----------------- coroutines -----------------
 
-    val coroutines_version = "1.4.1"
-    val corotines_core = "1.4.3"
+    val coroutines_version = "1.5.0"
+    val corotines_core = "1.5.0"
 
 
 
@@ -44,17 +44,17 @@ object Versions {
 
     //----------------- main -----------------
 
-    val corKtx = "1.3.2"
-    val appcompat = "1.2.0"
-    val material = "1.3.0"
-    val constraint = "2.0.4"
+    val corKtx = "1.6.0"
+    val appcompat = "1.3.1"
+    val material = "1.4.0"
+    val constraint = "2.1.0"
 
 
 
     //----------------- grpc -----------------
 
-    val grpc_Okhttp = "1.35.0"
-    val grpc_stub = "1.35.0"
+    val grpc_Okhttp = "1.38.0"
+    val grpc_stub = "1.38.0"
     val proto = "3.12.0"
     val protobuf_lite = "1.35.0"
     val annotations_api = "6.0.53"
