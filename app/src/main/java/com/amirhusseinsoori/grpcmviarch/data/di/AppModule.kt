@@ -43,6 +43,7 @@ object AppModule {
             BASE_URL,
             PORT
         )
+            .executor(Executors.newSingleThreadExecutor())
             .usePlaintext()
             .build()
     }
