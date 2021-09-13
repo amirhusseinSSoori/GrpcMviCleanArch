@@ -20,7 +20,9 @@ import kotlinx.coroutines.delay
 @AndroidEntryPoint
 class IntroFragment : BaseFragment<FragmentIntroBinding>(FragmentIntroBinding::inflate) {
 
+    override fun sideEffect(){
 
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -51,4 +53,6 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>(FragmentIntroBinding::i
         delay(1500)
         findNavController().navigate(R.id.action_introFragment_to_grpcFragment)
     }
+
+
 }

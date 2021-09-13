@@ -18,6 +18,7 @@ import dagger.hilt.components.SingletonComponent
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
 import io.grpc.domain.request.RequestNodesGrpc
+import java.util.concurrent.Executors
 
 import javax.inject.Singleton
 
