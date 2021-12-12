@@ -5,16 +5,15 @@ import com.amirhusseinsoori.grpcmviarch.domain.repository.GrpcRepository
 import com.arad.domain.entity.TurnOn
 import io.grpc.domain.request.SettingReply
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class GrpcRepositoryImp @Inject constructor(var api: NetworkSource) : GrpcRepository {
+    @FlowPreview
     override suspend fun apiTurnOn(turnOn: TurnOn): Flow<Result<SettingReply>> = flow {
         emit(Result.success(api.requestTurnOnWithSafe(turnOn)))
     }.catch { ex ->
         emit(Result.failure(ex))
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(Dispatchers.IO) .debounce(4000).distinctUntilChanged()
 }

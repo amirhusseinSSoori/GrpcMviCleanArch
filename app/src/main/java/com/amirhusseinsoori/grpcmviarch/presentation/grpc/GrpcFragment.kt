@@ -7,17 +7,23 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.amirhusseinsoori.grpcmviarch.databinding.FragmentGrpcBinding
 import com.amirhusseinsoori.grpcmviarch.presentation.base.BaseFragment
+import com.amirhusseinsoori.grpcmviarch.presentation.util.clicks
+import com.amirhusseinsoori.grpcmviarch.presentation.util.throttleFirst
 import com.arad.domain.entity.TurnOn
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GrpcFragment :  BaseFragment<FragmentGrpcBinding>(FragmentGrpcBinding::inflate) {
+class GrpcFragment : BaseFragment<FragmentGrpcBinding>(FragmentGrpcBinding::inflate) {
 
     private val viewModel: GrpcViewModel by viewModels()
+
     @Inject
     lateinit var androidId: String
 
@@ -25,13 +31,15 @@ class GrpcFragment :  BaseFragment<FragmentGrpcBinding>(FragmentGrpcBinding::inf
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onCollectTurnOnRequest()
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnGrpcFRequest.setOnClickListener {
-            viewModel.setEvent(GrpcContract.Event.OnShowResult(TurnOn(androidId,Date().time)))
-        }
+
+        binding.btnGrpcFRequest.clicks().throttleFirst(3000).onEach {
+            viewModel.setEvent(GrpcContract.Event.OnShowResult(TurnOn(androidId, Date().time)))
+        }.launchIn(lifecycleScope)
     }
 
 
@@ -40,30 +48,31 @@ class GrpcFragment :  BaseFragment<FragmentGrpcBinding>(FragmentGrpcBinding::inf
             viewModel.uiState.collect {
                 when (it.state) {
                     is GrpcContract.SendRequestState.Idle -> {
-                        Log.e("TAG", "onCollectTurnOnRequest:  isIdle", )}
+                       Log.e("TAG", "onCollectTurnOnRequest:  isIdle", )
+                    }
                     is GrpcContract.SendRequestState.Success -> {
-                        binding.txtGrpcFStatTimeResult.text=it.state.settingReply.startTime.toString()
-                        binding.txtGrpcFIntervalTimeResult.text=it.state.settingReply.intervalCon.toString()
+                        binding.txtGrpcFStatTimeResult.text =
+                            it.state.settingReply.startTime.toString()
+                        binding.txtGrpcFIntervalTimeResult.text =
+                            it.state.settingReply.intervalCon.toString()
                     }
 
                 }
             }
-
-
 
 
         }
         lifecycleScope.launchWhenCreated {
-
             viewModel.effect.collect {
                 when (it) {
                     is GrpcContract.Effect.ShowMessage -> {
-                        toasty(it.message,3)
+
+                        toasty(it.message, 3)
                     }
                 }
             }
         }
-        }
+    }
 
 
 
