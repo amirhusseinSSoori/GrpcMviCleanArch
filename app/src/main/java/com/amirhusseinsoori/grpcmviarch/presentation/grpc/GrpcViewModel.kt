@@ -6,6 +6,7 @@ import com.arad.domain.entity.TurnOn
 import com.ysfcyln.mviplayground.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.grpc.StatusRuntimeException
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,14 +40,13 @@ class GrpcViewModel @Inject constructor(var turnOnUseCase: TurnOnUseCase) :
 
     private fun sendRequest(turnOn: TurnOn?) {
         viewModelScope.launch {
-            try {
-                val settingReply = turnOnUseCase.execute(turnOn)
-                setState { copy(state = GrpcContract.SendRequestState.Success(settingReply = settingReply)) }
-                setEffect { GrpcContract.Effect.ShowMessage("Success") }
-
-
-            } catch (exception: StatusRuntimeException) {
-                setEffect { GrpcContract.Effect.ShowMessage(exception.message!!) }
+            turnOnUseCase.execute(turnOn).collect { data->
+                data.fold(onSuccess = {settingReply->
+                    setState { copy(state = GrpcContract.SendRequestState.Success(settingReply = settingReply)) }
+                    setEffect { GrpcContract.Effect.ShowMessage("Success") }
+                },onFailure = {exception->
+                    setEffect { GrpcContract.Effect.ShowMessage(exception.message!!) }
+                })
             }
         }
     }

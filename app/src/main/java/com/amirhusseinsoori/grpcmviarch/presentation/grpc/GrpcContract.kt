@@ -11,7 +11,6 @@ class GrpcContract {
 
     sealed class Event : UiEvent {
         class OnShowResult(var turnOn: TurnOn) : Event()
-        object HandelError : Event()
     }
 
     data class State(

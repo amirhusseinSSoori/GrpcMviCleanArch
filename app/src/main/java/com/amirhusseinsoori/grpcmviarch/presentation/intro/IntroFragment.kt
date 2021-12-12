@@ -20,9 +20,7 @@ import kotlinx.coroutines.delay
 @AndroidEntryPoint
 class IntroFragment : BaseFragment<FragmentIntroBinding>(FragmentIntroBinding::inflate) {
 
-    override fun sideEffect(){
 
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

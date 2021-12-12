@@ -26,15 +26,6 @@ abstract class BaseFragment<VB : ViewBinding>(
     private var _binding: VB? = null
     val binding get() = _binding!!
 
-    abstract fun sideEffect()
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sideEffect()
-    }
-
-
     @SuppressLint("ResourceAsColor")
     protected fun toasty(title: String, selectedMode: Int? = null) {
         val layout = layoutInflater.inflate(

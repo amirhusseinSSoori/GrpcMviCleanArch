@@ -1,1 +1,1 @@
-/home/kia/AndroidStudioProjects/GrpcMviCleanArche/buildSrc/build/classes/kotlin/main/Dependencies.class:/home/kia/AndroidStudioProjects/GrpcMviCleanArche/buildSrc/build/classes/kotlin/main/Versions.class
+C:\Users\pl\AndroidStudioProjects\GrpcMviCleanArchsdfsdf\buildSrc\build\classes\kotlin\main\Dependencies.class;C:\Users\pl\AndroidStudioProjects\GrpcMviCleanArchsdfsdf\buildSrc\build\classes\kotlin\main\Versions.class

@@ -22,14 +22,15 @@ class GrpcFragment :  BaseFragment<FragmentGrpcBinding>(FragmentGrpcBinding::inf
     lateinit var androidId: String
 
 
-    override fun sideEffect() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         onCollectTurnOnRequest()
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnGrpcFRequest.setOnClickListener {
             viewModel.setEvent(GrpcContract.Event.OnShowResult(TurnOn(androidId,Date().time)))
-            viewModel.setEvent(GrpcContract.Event.HandelError)
         }
     }
 
