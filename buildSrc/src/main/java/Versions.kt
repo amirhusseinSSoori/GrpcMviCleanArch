@@ -58,7 +58,7 @@ object Versions {
     val proto = "3.12.0"
     val protobuf_lite = "1.35.0"
     val annotations_api = "6.0.53"
-    val grpc_gradle_version = "0.8.15"
+    val grpc_gradle_version = "0.8.18"
 
 
 

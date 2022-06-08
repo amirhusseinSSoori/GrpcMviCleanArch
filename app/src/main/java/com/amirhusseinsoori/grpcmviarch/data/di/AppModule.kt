@@ -17,7 +17,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
-import io.grpc.domain.request.RequestNodesGrpc
+import requestTest.RequestNodesGrpc
+
 import java.util.concurrent.Executors
 
 import javax.inject.Singleton

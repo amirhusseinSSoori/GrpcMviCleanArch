@@ -1,10 +1,7 @@
-package com.ysfcyln.mviplayground.base
+package com.amirhusseinsoori.grpcmviarch.presentation.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.amirhusseinsoori.grpcmviarch.presentation.base.UiEffect
-import com.amirhusseinsoori.grpcmviarch.presentation.base.UiEvent
-import com.amirhusseinsoori.grpcmviarch.presentation.base.UiState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

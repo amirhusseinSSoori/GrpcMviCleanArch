@@ -1,1 +1,1 @@
-C:\Users\pl\AndroidStudioProjects\GrpcMviCleanArchsdfsdf\buildSrc\build\classes\kotlin\main\Dependencies.class;C:\Users\pl\AndroidStudioProjects\GrpcMviCleanArchsdfsdf\buildSrc\build\classes\kotlin\main\Versions.class
+C:\Users\a.soori\AndroidStudioProjects\GrpcMviCleanArch\buildSrc\build\classes\kotlin\main\Dependencies.class;C:\Users\a.soori\AndroidStudioProjects\GrpcMviCleanArch\buildSrc\build\classes\kotlin\main\Versions.class

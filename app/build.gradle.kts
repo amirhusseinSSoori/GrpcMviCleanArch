@@ -10,20 +10,25 @@ plugins {
 }
 protobuf{
     protoc {
-        artifact = Dependencies.protobuf_protoc
+        artifact = "com.google.protobuf:protoc:3.20.1"
     }
     plugins {
         id("grpc") {
-            artifact = (Dependencies.gen_grpc_java)
+            artifact = "io.grpc:protoc-gen-grpc-java:1.46.0"
+        }
+        id("grpckt") {
+            artifact = ("io.grpc:protoc-gen-grpc-kotlin:1.3.0:jdk8@jar")
         }
     }
     generateProtoTasks {
         all().forEach { task ->
             task.builtins {
                 create("java") { option("lite") }
+                create("kotlin") { option("lite") }
             }
             task.plugins {
                 create("grpc") { option("lite") }
+                create("grpckt") { option("lite") }
             }
         }
 
@@ -95,11 +100,16 @@ dependencies {
 
 
     //----------------- grpc -----------------
-    implementation(Dependencies.grpc_okhttp)
-    implementation(Dependencies.grpc_stub)
-    implementation(Dependencies.grpc_protobuf_lite)
-    compileOnly(Dependencies.annotations_api)
-
+   implementation(Dependencies.grpc_okhttp)
+//    implementation(Dependencies.grpc_stub)
+//    implementation(Dependencies.grpc_protobuf_lite)
+//    compileOnly(Dependencies.annotations_api)
+    implementation("io.grpc:grpc-stub:1.46.0")
+    api("io.grpc:grpc-stub:1.46.0")
+    api("io.grpc:grpc-protobuf-lite:1.46.0")
+    api("io.grpc:grpc-kotlin-stub:1.3.0")
+//    api("io.grpc:protoc-gen-grpc-java:1.46.0")
+    api("com.google.protobuf:protobuf-kotlin-lite:3.20.1")
 
     //----------------- navigationComponent -----------------
     implementation(Dependencies.navigation_fragment_ktx)
@@ -107,3 +117,6 @@ dependencies {
 
 
 }
+
+//https://cloud.google.com/blog/products/application-development/use-grpc-with-kotlin
+//https://github.com/grpc/grpc-kotlin

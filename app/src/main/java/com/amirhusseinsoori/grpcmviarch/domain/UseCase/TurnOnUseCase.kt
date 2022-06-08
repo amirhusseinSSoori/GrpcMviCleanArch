@@ -4,8 +4,8 @@ import com.amirhusseinsoori.grpcmviarch.domain.UseCase.base.UseCase
 
 import com.amirhusseinsoori.grpcmviarch.domain.repository.GrpcRepository
 import com.arad.domain.entity.TurnOn
-import io.grpc.domain.request.SettingReply
 import kotlinx.coroutines.flow.Flow
+import requestTest.SettingReply
 
 import javax.inject.Inject
 

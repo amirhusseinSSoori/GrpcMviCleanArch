@@ -4,7 +4,7 @@ import com.arad.domain.entity.TurnOn
 import com.amirhusseinsoori.grpcmviarch.presentation.base.UiEffect
 import com.amirhusseinsoori.grpcmviarch.presentation.base.UiEvent
 import com.amirhusseinsoori.grpcmviarch.presentation.base.UiState
-import io.grpc.domain.request.SettingReply
+import requestTest.SettingReply
 
 
 class GrpcContract {
